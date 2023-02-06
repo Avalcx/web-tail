@@ -91,7 +91,7 @@ make build-all
 
 -----------------------------------------------------------------------------------------------------------------
 ## 补充
-1.编译
+编译
 ```
 git clone 
 cd web-tail
@@ -99,5 +99,46 @@ go mod init web-tail
 go get github.com/gin-gonic/gin && go get github.com/gorilla/websocket
 go build
 ```
-2.
+增加允许跨域（便于使用nginx代理）
+```
+# client.go中,修改
+upgrader = websocket.Upgrader{
+        ReadBufferSize:  1024,
+        WriteBufferSize: 1024,
+        # 补充项目
+        CheckOrigin: func(r *http.Request) bool {
+            return true
+        },
+    }
 
+
+# nginx.conf中
+# http块下增加
+
+http {
+map $http_upgrade $connection_upgrade{
+            default upgrade;
+            '' close;
+    }
+}
+
+# server块下增加
+server {
+location  ~* ^/_cat_ {
+       allow 192.168.130.0/23;
+       deny  all;
+       proxy_pass http://127.0.0.1:18888;
+       proxy_http_version 1.1;
+       proxy_set_header Upgrade $http_upgrade;
+       proxy_set_header Connection "upgrade";
+       proxy_send_timeout 1800s;
+       proxy_read_timeout 1800s;
+    }
+}
+
+```
+
+## 修改路由
+
+全局搜索/ws /log即可
+main.go client.go log.index中
