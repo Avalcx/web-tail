@@ -87,3 +87,17 @@ make build-all
 打浏览器进行访问，地址：http://ip:8765/log, 按 `ESC` 键可退出与服务器的连接或在页面右下角切换不同的日志进行查看:
 
 ![image-demo](assets/image-demo.png)
+
+
+-----------------------------------------------------------------------------------------------------------------
+## 补充
+1.编译
+```
+git clone 
+cd web-tail
+go mod init web-tail
+go get github.com/gin-gonic/gin && go get github.com/gorilla/websocket
+go build
+```
+2.
+
