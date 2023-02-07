@@ -91,7 +91,7 @@ make build-all
 
 -----------------------------------------------------------------------------------------------------------------
 ## 补充
-编译
+### 编译
 ```
 git clone 
 cd web-tail
@@ -99,7 +99,7 @@ go mod init web-tail
 go get github.com/gin-gonic/gin && go get github.com/gorilla/websocket
 go build
 ```
-增加允许跨域（便于使用nginx代理）
+### 增加允许跨域（便于使用nginx代理）
 ```
 # client.go中,修改
 upgrader = websocket.Upgrader{
